@@ -1,0 +1,14 @@
+<h2>NOSOTROS</h2>
+{{#if products.length}}
+  <section class="productsContainer">
+    {{#each products}}
+      <div class="productsCard">
+        <h3>Nombre: {{title}}</h3>
+        <h4>Precio:{{price}}</h4>
+        <img src="{{thumbnail}}" /></div>
+    {{/each}}
+  </section>
+{{else}}
+  <h3>No hay productos agregados!</h3>
+{{/if}}
+
