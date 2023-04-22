@@ -1,1 +1,18 @@
 <p></p>
+{{#if products.length}}
+<section class="productsContainer">
+    {{#each products}}
+    <div class="productsCard">
+        <h3>{{title}}</h3>
+        <img src="{{thumbnail}}" />
+        <h4>Precio: ${{price}}</h4>
+
+        <button class="agregar">
+            <a class="textoAgregar" href="/products/add/{{_id}}">Agregar al carrito</a>
+        </button>
+    </div>
+    {{/each}}
+</section>
+{{else}}
+<h3>No hay productos agregados!</h3>
+{{/if}}

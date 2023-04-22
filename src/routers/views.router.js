@@ -1,8 +1,7 @@
-import { Router, json } from "express";
-import ProductManager from "../../dao/productManagerMongo.js";
-import ChatManager from "../../dao/chatManagerMongo.js";
-import { cartsModel } from "../../db/models/carts.model.js";
-import CartManager from "../../dao/cartManagerMongo.js";
+import { Router } from "express";
+import ProductManager from "../dao/productManagerMongo.js";
+import ChatManager from "../dao/chatManagerMongo.js";
+import CartManager from "../dao/cartManagerMongo.js";
 
 const router = Router();
 const productManager = new ProductManager();
@@ -11,15 +10,13 @@ const cartManager = new CartManager();
 
 /* home */
 router.get("/", async (req, res) => {
-  const products = await productManager.getAll();
   res.render("home", {
-    products: products,
   });
 });
 
 /* realTimeProducts */
 router.get("/realtimeproducts", async (req, res) => {
-  const products = await productManager.getAll();
+  const products = await productManager.getProducts();
   res.render("realTimeProducts", {
     products: products,
   });
@@ -34,13 +31,14 @@ router.get("/chat", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
+  const products = await productManager.getProducts();
   res.render("products", {
-    
-  });
+    products: products,});
 });
 
 router.get("/carts", async (req, res) => {
   res.render("carts", {
+    Carts: Carts,
     });
 });
 

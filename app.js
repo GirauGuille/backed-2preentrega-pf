@@ -1,11 +1,13 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
-import routers from "./src/routers/index.routers.js";
 import { __dirname } from "./src/utils.js";
 import ProductManager from "./src/dao/productManagerMongo.js";
 import ChatManager from "./src/dao/chatManagerMongo.js";
 import "./src/db/dbConfig.js";
+import products from "./src/routers/products.router.js";
+import carts from "./src/routers/carts.router.js";
+import views from "./src/routers/views.router.js";
 
 const app = express();
 const PORT = 8080;
@@ -30,8 +32,9 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
 
 /* routers */
-app.use("/", routers);
-app.use("/api", routers);
+app.use("/api/products", products);
+app.use("/api/carts", carts);
+app.use("/", views);
 
 /* server */
 const httpServer = app.listen(PORT, () => {
