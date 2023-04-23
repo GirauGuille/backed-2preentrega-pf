@@ -37,9 +37,7 @@ router.get("/products", async (req, res) => {
 });
 
 router.get("/carts", async (req, res) => {
-  res.render("carts", {
-    Carts: Carts,
-    });
+  res.render("carts", {});
 });
 
 router.get("/carts/:cid", async (req, res) => {
