@@ -6,7 +6,15 @@ const productManager = new ProductManager();
 const notFound = { error: "Product not found" };
 
 router.get("/", async (req, res) => {
+  const { limit } = req.query;
   const products = await productManager.getAll();
+  if (!limit) {
+    res.status(201).json({ products });
+  } else {
+    let newLimit = parseInt(req.query.limit);
+    const filterProducts = products.filter((p) => p.id <= newLimit);
+    res.json({ filterProducts });
+  }
   res.status(200).json(products);
 });
 
