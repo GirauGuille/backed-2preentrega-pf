@@ -1,49 +1,37 @@
-import express from "express";
-import handlebars from "express-handlebars";
-import { Server } from "socket.io";
-import { __dirname } from "./src/utils.js";
-import ProductManager from "./src/dao/productManagerMongo.js";
-import ChatManager from "./src/dao/chatManagerMongo.js";
-import "./src/db/dbConfig.js";
-import products from "./src/routers/products.router.js";
-import carts from "./src/routers/carts.router.js";
-import views from "./src/routers/views.router.js";
+import express from 'express';
+import productsRouter from './routes/products.router.js';
+import cartsRouter from './routes/carts.router.js';
+import { __dirname } from './utils.js';
+import handlebars from 'express-handlebars';
+import viewsRouter from './routes/views.router.js';
+import { Server } from 'socket.io';
+import './db/dbConfig.js';
+import ProductManager from '../src/Dao/ProductManagerMongo.js';
+//import chatManager from '../src/Dao/ChatManagerMongo.js';
 
-//import cookieParser from "cookie-parser";
+const path = __dirname + '/products.json';
+
 
 const app = express();
 const PORT = 8080;
-const productManager = new ProductManager();
-const chatManager = new ChatManager();
+const productManager = new ProductManager(path);
+//const chatManager = new ChatManager();
 
 /* middlewares */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
-
-/* cokies */
-/* app.use(cookieParser())
-
-app.get('/crearCookie', (req, res) => {
-  res.cookie('cookie1', 'primera Cookie').send('respuesta guardado cookie')
-}) */
+app.use(express.static(__dirname + '/public'));
 
 /* handlebars */
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: "hbs",
-    defaultLayout: "main.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-  })
-);
-app.set("views", __dirname + "/views");
-app.set("view engine", "hbs");
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'handlebars');
 
 /* routers */
-app.use("/api/products", products);
-app.use("/api/carts", carts);
-app.use("/", views);
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+app.use('/', viewsRouter);
+
 
 /* server */
 const httpServer = app.listen(PORT, () => {
@@ -53,6 +41,7 @@ const httpServer = app.listen(PORT, () => {
 httpServer.on("error", error =>
   console.log(`Error en servidor: ${error.message}`)
 );
+
 
 /* webSocket */
 const socketServer = new Server(httpServer);

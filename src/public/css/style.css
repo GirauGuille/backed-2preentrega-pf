@@ -10,6 +10,7 @@ h1, h2 {
 
 .nosotrosTexto{
     text-align: center;
+    margin-bottom: 15px;
 }
 
 .product {
@@ -48,6 +49,13 @@ h1, h2 {
 .menuLink{
     display: flex; 
     justify-content: space-around;
+}
+
+.loggin{
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 img {

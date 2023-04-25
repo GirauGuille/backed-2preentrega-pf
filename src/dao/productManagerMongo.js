@@ -1,66 +1,66 @@
-import { productsModel } from "../db/models/products.model.js";
+import { productModel } from '../db/models/products.model.js';
 
-export default class ProductManager {
-  async getProducts() {
+class ProductManager {
+  getProducts = async () => {
     try {
-      const products = await productsModel.find().lean();
+      const products = await productModel.find().lean();
+/*       const options = {
+        page: page || 1,
+        limit: limit || 10,
+        sort: sort,
+        lean: true,
+    }
+    const products = await productModel.paginate(options) */
       return products;
     } catch (error) {
-      console.log(`Error obteniendo todos los productos: ${error.message}`);
+      console.log(error);
     }
   };
 
-  async getAll() {
+  getProductById = async (id) => {
     try {
-      const allProducts = await productsModel.find().lean();
-      return allProducts;
-    } catch (error) {
-      console.log(`Error obteniendo todos los productos: ${error.message}`);
-    }
-  }
-
-  async getProductById(id) {
-    try {
-      const product = await productsModel.findOne({ _id: id });
+      const product = await productModel.findOne({ _id: id });
       return product;
     } catch (error) {
       console.log(error);
     }
   };
 
-  async addProducts(product) {
+  addProducts = async (product) => {
     try {
-      const newProduct = await productsModel.create(product);
+      const newProduct = await productModel.create(product);
       return newProduct;
     } catch (error) {
       console.log(error);
     }
   };
 
-  async updateProduct(id, obj) {
+  updateProduct = async (id, obj) => {
     try {
-      const product = await productsModel.findOneAndUpdate({ _id: id }, obj);
+      const product = await productModel.findOneAndUpdate({ _id: id }, obj);
       return product;
     } catch (error) {
       console.log(error);
     }
   };
 
-  async deleteProducts() {
+  deleteProducts = async () => {
     try {
-      await productsModel.deleteMany();
+      await productModel.deleteMany();
       return 'Products deleted';
     } catch (error) {
       console.log(error);
     }
   };
 
-  async deleteProductsById() {
+  deleteProductsById = async (id) => {
     try {
-      await productsModel.deleteOne({ _id: id });
+      await productModel.deleteOne({ _id: id });
       return 'Product deleted';
     } catch (error) {
       console.log(error);
     }
   };
 }
+
+export default ProductManager;
