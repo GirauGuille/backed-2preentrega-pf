@@ -27,6 +27,12 @@ h1, h2 {
     flex-direction: column;
 }
 
+.agregar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 .imgPortada{
     width: 50%;
     height: 50%;

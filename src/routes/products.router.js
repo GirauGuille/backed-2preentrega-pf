@@ -13,6 +13,11 @@ router.get('/', async (req, res) => {
     const { limit, page, sort, query } = req.query;
     const products = await productManager.getProducts(limit, page, sort, query);
 
+    products.docs = products.docs.map(product => {
+      const { _id, title, description, price, code, stock, category, thumbnail } = product;
+      return { id: _id, title, description, price, code, stock, category, thumbnail };
+  });
+
     const info = {
       totalPages: products.totalPages,
       prevPage: products.prevPage,
@@ -24,13 +29,8 @@ router.get('/', async (req, res) => {
       nextLink: products.hasNextPage ? `http://localhost:8080/api/products?page=${products.nextPage}` : null,
   }
 
-    if (!limit) {
-      res.status(201).json({ products, info });
-    } else {
-      let newLimit = parseInt(req.query.limit);
-      const filterProducts = products.filter((p) => p.id <= newLimit);
-      res.json({ filterProducts });
-    }
+  res.status(200).send({ payload: products.docs, info });
+
   } catch (error) {
     console.log(error);
     res.status(500).json('product search error');

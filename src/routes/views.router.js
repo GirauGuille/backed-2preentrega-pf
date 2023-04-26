@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 /* realTimeProducts */
 router.get("/realtimeproducts", async (req, res) => {
-  const products = await productManager.getProducts();
+  const products = await productManager.getProductsViews();
   res.render("realTimeProducts", {
     products: products,
   });
@@ -31,7 +31,7 @@ router.get("/chat", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  const products = await productManager.getProducts();
+  const products = await productManager.getProductsViews();
   res.render("products", {
     products: products,});
 });
